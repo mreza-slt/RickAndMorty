@@ -1,12 +1,27 @@
-import { useState } from "react";
-import { allCharacters } from "../data/data";
+import { useEffect, useState } from "react";
 import "./App.css";
 import CharacterDetail from "./components/CharacterDetail";
 import CharacterList from "./components/CharacterList";
 import Navbar, { SearchResult } from "./components/Navbar";
 
 function App() {
-  const [characters, setCharacters] = useState(allCharacters);
+  const [characters, setCharacters] = useState([]);
+
+  // useEffect(() => {
+  //   fetch("https://rickandmortyapi.com/api/character")
+  //     .then((res) => res.json())
+  //     .then((data) => setCharacters(data.results.slice(0, 6)));
+  // }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch("https://rickandmortyapi.com/api/character");
+      const data = await res.json();
+      setCharacters(data.results.slice(0, 3));
+    }
+
+    fetchData();
+  }, []);
 
   return (
     <div className="app">
