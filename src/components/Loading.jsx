@@ -1,3 +1,5 @@
+import { ClipLoader } from "react-spinners";
+
 export default function Loading() {
-  return <div>Loading Data...</div>;
+  return <div><ClipLoader color="var( --slate-100)"/></div>;
 }
