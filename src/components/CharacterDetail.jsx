@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import Loading from "./Loading";
 import toast from "react-hot-toast";
 
-export default function CharacterDetail({ selectedId }) {
+export default function CharacterDetail({
+  selectedId,
+  onAddFavourite,
+  isAddToFavourite,
+}) {
   const [character, setCharacter] = useState(null);
   const [isloading, setIsloading] = useState(false);
   const [episodes, setEpisodes] = useState([]);
@@ -24,7 +28,7 @@ export default function CharacterDetail({ selectedId }) {
         );
 
         // setEpisodes(Array.isArray(episodeData)?episodeData.slice(0,6):[episodeData]);
-        setEpisodes([episodeData].flat().slice(0,6));
+        setEpisodes([episodeData].flat().slice(0, 6));
         setCharacter(data);
       } catch (error) {
         setCharacter(null);
@@ -80,7 +84,16 @@ export default function CharacterDetail({ selectedId }) {
             <p>{character.location?.name || "Unknown"}</p>
           </div>
           <div className="actions">
-            <button className="btn btn--primary">Add to favourite</button>
+            {isAddToFavourite ? (
+              <p>Already added to favourites✅</p>
+            ) : (
+              <button
+                className="btn btn--primary"
+                onClick={() => onAddFavourite(character)}
+              >
+                Add to favourite
+              </button>
+            )}
           </div>
         </div>
       </div>

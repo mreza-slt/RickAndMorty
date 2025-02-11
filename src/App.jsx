@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import CharacterDetail from "./components/CharacterDetail";
 import CharacterList from "./components/CharacterList";
-import Navbar, { Search, SearchResult } from "./components/Navbar";
+import Navbar, { Favourites, Search, SearchResult } from "./components/Navbar";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
@@ -11,6 +11,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
+  const [favourites, setFavourites] = useState([]);
 
   // fetch then() catch() //
 
@@ -74,17 +75,22 @@ function App() {
   // }, []);
 
   useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
     async function fetchData() {
       try {
         setIsLoading(true);
         const { data } = await axios.get(
-          `https://rickandmortyapi.com/api/character/?name=${query}`
+          `https://rickandmortyapi.com/api/character/?name=${query}`,
+          { signal }
         );
 
         setCharacters(data.results.slice(0, 6));
       } catch (err) {
-        setCharacters([]);
-        toast.error(err.response.data.error);
+        if (!err.__CANCEL__) {
+          setCharacters([]);
+          toast.error(err.response.data.error);
+        }
       } finally {
         setIsLoading(false);
       }
@@ -96,11 +102,22 @@ function App() {
     // }
 
     fetchData();
+
+    return () => {
+      controller.abort();
+    };
   }, [query]);
 
   const handleSelectCharacter = (id) => {
     setSelectedId((prevId) => (prevId === id ? null : id));
   };
+
+  const handleAddFavourite = (char) => {
+    // setFavourites([...favourites,char]) // method 1
+    setFavourites((prevFav) => [...prevFav, char]); // method 2
+  };
+
+  const isAddToFavourite = favourites.map((fav) => fav.id).includes(selectedId);
 
   return (
     <div className="app">
@@ -108,6 +125,7 @@ function App() {
       <Navbar>
         <Search query={query} setQuery={setQuery} />
         <SearchResult numOfResult={characters.length} />
+        <Favourites numOfFavourites={favourites.length} />
       </Navbar>
       <Main>
         <CharacterList
@@ -116,7 +134,11 @@ function App() {
           isLoading={isLoading}
           onSelectCharacter={handleSelectCharacter}
         />
-        <CharacterDetail selectedId={selectedId} />
+        <CharacterDetail
+          selectedId={selectedId}
+          onAddFavourite={handleAddFavourite}
+          isAddToFavourite={isAddToFavourite}
+        />
       </Main>
     </div>
   );
