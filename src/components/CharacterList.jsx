@@ -1,27 +1,36 @@
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import Loading from "./Loading";
-export default function CharacterList({ characters, isLoading,onSelectCharacter,selectedId }) {
+export default function CharacterList({
+  characters,
+  isLoading,
+  onSelectCharacter,
+  selectedId,
+}) {
   return (
     <div className="characters-list">
       {isLoading && <Loading />}
 
       {characters.map((item) => (
-        <Character key={item.id} item={item} onSelectCharacter={onSelectCharacter} selectedId={selectedId}/>
+        <Character key={item.id} item={item}>
+          <button
+            className="icon red"
+            onClick={() => onSelectCharacter(item.id)}
+          >
+            {selectedId === item.id ? <EyeSlashIcon /> : <EyeIcon />}
+          </button>
+        </Character>
       ))}
     </div>
   );
 }
 
-function Character({ item ,onSelectCharacter,selectedId}) {
+export function Character({ item, children }) {
   return (
     <div className="list__item">
       <img src={item.image} alt={item.name} />
       <CharacterName item={item} />
       <CharacterInfo item={item} />
-      <button className="icon red" onClick={()=>onSelectCharacter(item.id)}>
-      {selectedId===item.id?<EyeSlashIcon/>:<EyeIcon />}
-        
-      </button>
+      {children}
     </div>
   );
 }
@@ -30,7 +39,7 @@ function CharacterName({ item }) {
   return (
     <h3 className="name">
       <span style={{ color: "red" }}>
-      {item.gender === "Male" ? "🤵" : "🙎"}
+        {item.gender === "Male" ? "🤵" : "🙎"}
       </span>
       <span>{item.name}</span>
     </h3>
