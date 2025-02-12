@@ -11,10 +11,10 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
-  const [favourites, setFavourites] = useState(() =>
-    JSON.parse(localStorage.getItem("FAVOURITES") || [])
-  );
-
+  const [favourites, setFavourites] = useState(() => {
+    const storedFavourites = localStorage.getItem("FAVOURITES");
+    return storedFavourites ? JSON.parse(storedFavourites) : []; 
+  });
   // fetch then() catch() //
 
   // useEffect(() => {
