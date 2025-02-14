@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import CharacterDetail from "./components/CharacterDetail";
 import CharacterList from "./components/CharacterList";
-import Navbar, { Favourites, Search, SearchResult } from "./components/Navbar";
+import Navbar, {
+  Favourites,
+  Logo,
+  Search,
+  SearchResult,
+} from "./components/Navbar";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
@@ -13,7 +18,7 @@ function App() {
   const [selectedId, setSelectedId] = useState(null);
   const [favourites, setFavourites] = useState(() => {
     const storedFavourites = localStorage.getItem("FAVOURITES");
-    return storedFavourites ? JSON.parse(storedFavourites) : []; 
+    return storedFavourites ? JSON.parse(storedFavourites) : [];
   });
   // fetch then() catch() //
 
@@ -133,12 +138,17 @@ function App() {
     <div className="app">
       <Toaster />
       <Navbar>
-        <Search query={query} setQuery={setQuery} />
-        <SearchResult numOfResult={characters.length} />
-        <Favourites
-          favourites={favourites}
-          onDeleteFavourite={handleDeleteFavourite}
-        />
+        <div className="navbar-part">
+          <Logo />
+          <Search query={query} setQuery={setQuery} />
+        </div>
+        <div className="navbar-part">
+          <SearchResult numOfResult={characters.length} />
+          <Favourites
+            favourites={favourites}
+            onDeleteFavourite={handleDeleteFavourite}
+          />
+        </div>
       </Navbar>
       <Main>
         <CharacterList

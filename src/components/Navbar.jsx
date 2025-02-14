@@ -6,13 +6,12 @@ import Modal from "./Modal";
 export default function Navbar({ children }) {
   return (
     <nav className="navbar">
-      <Logo />
       {children}
     </nav>
   );
 }
 
-function Logo() {
+export function Logo() {
   return <div className="navbar__logo">LOGO</div>;
 }
 
