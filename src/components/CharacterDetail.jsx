@@ -50,7 +50,7 @@ export default function CharacterDetail({
   }
 
   if (!character || !selectedId) {
-    toast.success("please select a character...")
+   
     return (
       <div style={{ flex: 1, color: "var(--slate-300)" }}>
         please select a character...
