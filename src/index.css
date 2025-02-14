@@ -15,6 +15,10 @@
   --green-600: #22c55e;
 }
 
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   width: 100vw;
   min-height: 100vh;
