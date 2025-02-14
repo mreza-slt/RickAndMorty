@@ -5,13 +5,14 @@ export default function CharacterList({
   isLoading,
   onSelectCharacter,
   selectedId,
+  children,
 }) {
   return (
     <div className="characters-list">
       {isLoading && <Loading />}
 
       {characters.map((item) => (
-        <Character key={item.id} item={item}>
+        <Character key={item.id} item={item} prop={children} selectedId={selectedId}>
           <button
             className="icon red"
             onClick={() => onSelectCharacter(item.id)}
@@ -24,14 +25,19 @@ export default function CharacterList({
   );
 }
 
-export function Character({ item, children }) {
+export function Character({ item, children, prop, selectedId }) {
   return (
-    <div className="list__item">
-      <img src={item.image} alt={item.name} />
-      <CharacterName item={item} />
-      <CharacterInfo item={item} />
-      {children}
-    </div>
+    <>
+      <div className="list__item">
+        <img src={item.image} alt={item.name} />
+        <CharacterName item={item} />
+        <CharacterInfo item={item} />
+        {children}
+      </div>
+      {item.id === selectedId && (
+        <div className="character-detail__mobail">{prop}</div>
+      )}
+    </>
   );
 }
 

@@ -156,12 +156,22 @@ function App() {
           characters={characters}
           isLoading={isLoading}
           onSelectCharacter={handleSelectCharacter}
-        />
-        <CharacterDetail
-          selectedId={selectedId}
-          onAddFavourite={handleAddFavourite}
-          isAddToFavourite={isAddToFavourite}
-        />
+        >
+          {
+            <CharacterDetail
+              selectedId={selectedId}
+              onAddFavourite={handleAddFavourite}
+              isAddToFavourite={isAddToFavourite}
+            />
+          }
+        </CharacterList>
+        <div className="character-detail__medium">
+          <CharacterDetail
+            selectedId={selectedId}
+            onAddFavourite={handleAddFavourite}
+            isAddToFavourite={isAddToFavourite}
+          />
+        </div>
       </Main>
     </div>
   );

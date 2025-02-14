@@ -75,7 +75,7 @@
 }
 
 .characters-list {
-  width: 40%;
+  min-width: 40%;
 }
 
 .box h2 {
@@ -244,6 +244,10 @@
   .character-detail__info .actions {
     flex-direction: row;
   }
+
+  .characters-list .character-detail__mobail {
+    display: none;
+  }
 }
 
 @media (max-width: 768px) {
@@ -279,12 +283,20 @@
     gap: 1rem;
   }
 
+  .main .character-detail__medium {
+    display: none;
+  }
+
   .characters-list {
     width: 100%;
   }
 
   .character-detail {
     flex-direction: column;
+  }
+
+  .character-episodes{
+    margin-bottom: 1rem;
   }
 
   .character-detail__img {
@@ -295,7 +307,6 @@
 
 @media (max-width: 480px) {
   .list__item {
-    column-gap: 1rem;
     grid-template-rows: auto auto;
     padding: 0.5rem;
   }
