@@ -33,17 +33,6 @@ button {
   border: none;
   outline: none;
 }
-.text-field {
-  padding: 0.7rem 1rem;
-  border-radius: 0.5rem;
-  color: var(--slate-100);
-  background-color: var(--slate-500);
-  font-size: 1.1rem;
-}
-
-.text-field::placeholder {
-  color: var(--slate-400);
-}
 
 .btn {
   padding: 0.8rem 1rem;
